@@ -12,7 +12,7 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Particle DEMO");
 
-	ParticleSystemManager* m_VFXManager = new ParticleSystemManager();
+	ParticleSystemManager* m_VFXManager = new ParticleSystemManager(2, &window);
 	sf::Clock m_clock;
 
 	while (window.isOpen())

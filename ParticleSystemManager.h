@@ -5,14 +5,15 @@
 class ParticleSystemManager
 {
 public:
-	ParticleSystemManager();
+	ParticleSystemManager(int count, sf::Window* window);
 	//~ParticleSystemManager();
 	void Update(sf::Time elapsed);
 	void Draw(sf::RenderWindow* window);
 private:
-	//std::vector<ParticleSystem> m_particleSystem;
-	ParticleSystem* m_particleSystem_0;
-	ParticleSystem* m_particleSystem_1;
+	std::vector<ParticleSystem> m_particleSystem;
 	int particleSystemCount;
+
+	//ParticleSystem* m_particleSystem_0;
+	//ParticleSystem* m_particleSystem_1;
 };
 

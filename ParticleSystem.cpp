@@ -88,8 +88,12 @@ void ParticleSystem::ResetParticle(std::size_t index)
 	float angle = (std::rand() % 360) * 3.14f / 180.f;
 	float speed = (std::rand() % 50) + 50.f;
 	m_particles[index].velocity = sf::Vector2f(std::cos(angle) * speed, std::sin(angle) * speed);
-	m_particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 1000);
 
+	// Spraying effect
+	//m_particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 1000);
+
+	// Firework effect
+	m_particles[index].lifetime = sf::milliseconds(3000);
 	// reset the position of the corresponding vertex
 	m_shapes[index].position = m_emitter;
 }

@@ -1,22 +1,17 @@
 #include "ParticleSystemManager.h"
 
-ParticleSystemManager::ParticleSystemManager()
+ParticleSystemManager::ParticleSystemManager(int count, sf::Window* window)
 {
-	/*particleSystemCount = count;
-	m_particleSystem->resize(2);
+	particleSystemCount = count;
+	m_particleSystem.resize(2);
 
-	for (std::size_t i = 0; i < m_particleSystem->size(); ++i)
+	for (std::size_t i = 0; i < m_particleSystem.size(); ++i)
 	{
 		sf::Vector2f fixedPosition;
-		fixedPosition.x = window->getSize().x / particleSystemCount;
-		fixedPosition.y = window->getSize().x / 2;
-		m_particleSystem[i]->SetEmitter(fixedPosition);
-	}*/
-
-	m_particleSystem_0 = new ParticleSystem();
-	m_particleSystem_1 = new ParticleSystem();
-	m_particleSystem_0->SetEmitter(sf::Vector2f(150,150));
-	m_particleSystem_1->SetEmitter(sf::Vector2f(100, 100));
+		fixedPosition.x = i * window->getSize().x / particleSystemCount + 200;
+		fixedPosition.y = window->getSize().x / 4 ;
+		m_particleSystem[i].SetEmitter(fixedPosition);
+	}
 }
 
 
@@ -30,16 +25,12 @@ ParticleSystemManager::ParticleSystemManager()
 
 void ParticleSystemManager::Update(sf::Time elapsed)
 {
-	/*for (std::size_t i = 0; i < m_particleSystem->size(); ++i)
-		m_particleSystem[i]->Update(elapsed);*/
-	m_particleSystem_0->Update(elapsed);
-	m_particleSystem_1->Update(elapsed);
+	for (std::size_t i = 0; i < m_particleSystem.size(); ++i)
+		m_particleSystem[i].Update(elapsed);
 }
 
 void ParticleSystemManager::Draw(sf::RenderWindow* window)
 {
-	/*for (std::size_t i = 0; i < m_particleSystem->size(); ++i)
-		window->draw(m_particleSystem[i]);*/
-	window->draw(*m_particleSystem_0); 
-	window->draw(*m_particleSystem_1);
+	for (std::size_t i = 0; i < m_particleSystem.size(); ++i)
+		window->draw(m_particleSystem[i]);
 }
