@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include "TextureManager.h"
+
 #pragma once
 class ParticleSystem : public sf::Drawable, public sf::Transformable
 {
 	
 public:
-	ParticleSystem();
+	ParticleSystem(TextureManager* m_textureManager);
 	//~ParticleSystem();
 	void Update(sf::Time deltaTime);
 	void SetEmitter(sf::Vector2f position);
@@ -21,10 +23,9 @@ private:
 	void ResetParticle(std::size_t index);
 	std::vector<Particle> m_particles;
 	std::vector<sf::CircleShape> m_shapes;
-	//sf::VertexArray m_shapes;
 	sf::Time m_emiterLifetime;
 	sf::Vector2f m_emitter;
-	sf::Texture* m_texture;
+	sf::Texture m_texture;
 	int count = 500;
 	float timer = 0;
 	int emiterAngle = 360;

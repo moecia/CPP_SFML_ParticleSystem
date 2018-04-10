@@ -7,13 +7,15 @@
 #include <SFML/Main.hpp>
 
 #include "ParticleSystemManager.h"
+#include "TextureManager.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Particle DEMO");
 
 	//ParticleSystemManager* m_VFXManager = new ParticleSystemManager(2, &window);
-	ParticleSystemManager* m_VFXManager = new ParticleSystemManager(&window);
+	TextureManager* m_textureManager = new TextureManager();
+	ParticleSystemManager* m_VFXManager = new ParticleSystemManager(&window, m_textureManager);
 	sf::Text* m_guild = new sf::Text;
 	sf::Font* m_font = new sf::Font;
 	m_font->loadFromFile("Fonts/visitor1.ttf");
@@ -24,7 +26,7 @@ int main()
 
 	sf::Clock m_clock;
 	sf::Clock m_timer;
-	float timer = 0.8f;
+	float timer = 1.8f;
 
 	while (window.isOpen())
 	{
@@ -35,7 +37,7 @@ int main()
 				window.close();
 		}
 		
-		if (timer < 1.0f)
+		if (timer < 2.0f)
 			timer += m_timer.restart().asSeconds();
 		else
 		{

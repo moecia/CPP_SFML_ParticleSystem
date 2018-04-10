@@ -1,6 +1,6 @@
 #include "ParticleSystemManager.h"
 
-ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window)
+ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window, TextureManager* m_textureManager)
 {
 	m_particlesCount = new sf::Text;
 	m_font = new sf::Font;
@@ -11,6 +11,8 @@ ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window)
 	m_particlesCount->setString("Particles Count: 0");
 	m_particlesCount->setPosition((window->getSize().x - m_particlesCount->getGlobalBounds().width) / 2, 0);
 	
+	this->m_textureManager = new TextureManager;
+	this->m_textureManager = m_textureManager;
 }
 
 //ParticleSystemManager::~ParticleSystemManager()
@@ -42,10 +44,9 @@ void ParticleSystemManager::Draw(sf::RenderWindow* window)
 
 void ParticleSystemManager::AddParticleSystem(sf::Vector2f position)
 {
-	particleSystemCount += 1;
-	m_particleSystem.resize(particleSystemCount);
-
-	m_particleSystem[m_particleSystem.size()-1].SetEmitter(position);
-	m_particleSystem[m_particleSystem.size() - 1].SetEmitAngle(rand() % 360);
-	m_particleSystem[m_particleSystem.size() - 1].SetInitialSpeed(rand() % 200);
+	ParticleSystem* particleSystemToAdd = new ParticleSystem(m_textureManager);
+	particleSystemToAdd->SetEmitter(position);
+	particleSystemToAdd->SetEmitAngle(rand() % 360);
+	particleSystemToAdd->SetInitialSpeed(rand() % 200);
+	m_particleSystem.emplace_back(*particleSystemToAdd);
 }

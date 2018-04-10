@@ -1,11 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "ParticleSystem.h"
+#include "TextureManager.h"
 
 class ParticleSystemManager
 {
 public:
-	ParticleSystemManager(sf::RenderWindow* window);
+	ParticleSystemManager(sf::RenderWindow* window, TextureManager* m_textureManager);
 	//~ParticleSystemManager();
 	void Update(sf::Time deltaTime);
 	void Draw(sf::RenderWindow* window);
@@ -16,5 +17,6 @@ private:
 	sf::Text* m_particlesCount = new sf::Text;
 	sf::Font* m_font = new sf::Font;
 	int particlesCount = 0;
+	TextureManager* m_textureManager;
 };
 
