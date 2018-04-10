@@ -10,10 +10,21 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Particle DEMO");
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Particle DEMO");
 
-	ParticleSystemManager* m_VFXManager = new ParticleSystemManager(2, &window);
+	//ParticleSystemManager* m_VFXManager = new ParticleSystemManager(2, &window);
+	ParticleSystemManager* m_VFXManager = new ParticleSystemManager(&window);
+	sf::Text* m_guild = new sf::Text;
+	sf::Font* m_font = new sf::Font;
+	m_font->loadFromFile("Fonts/visitor1.ttf");
+	m_guild->setFont(*m_font);
+	m_guild->setCharacterSize(30);
+	m_guild->setString("E: Add particles \nQ: Remove particles");
+	m_guild->setPosition(10, 10);
+
 	sf::Clock m_clock;
+	sf::Clock m_timer;
+	float timer = 0.8f;
 
 	while (window.isOpen())
 	{
@@ -24,17 +35,26 @@ int main()
 				window.close();
 		}
 		
-		// make the particle system emitter follow the mouse
-		//sf::Vector2i mouse = sf::Mouse::getPosition(window);
-		//m_particles->SetEmitter(window.mapPixelToCoords(mouse));
+		if (timer < 1.0f)
+			timer += m_timer.restart().asSeconds();
+		else
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				sf::Vector2i mouse = sf::Mouse::getPosition(window);
+				m_VFXManager->AddParticleSystem((sf::Vector2f)mouse);
+				timer = 0;
+			}
+		}
 
 		// update it
-		sf::Time elapsed = m_clock.restart();
-		m_VFXManager->Update(elapsed);
+		sf::Time deltaTime = m_clock.restart();
+		m_VFXManager->Update(deltaTime);
 
 		// draw it
 		window.clear();
 		m_VFXManager->Draw(&window);
+		window.draw(*m_guild);
 		window.display();
 	}
 

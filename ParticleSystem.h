@@ -6,28 +6,29 @@ class ParticleSystem : public sf::Drawable, public sf::Transformable
 public:
 	ParticleSystem();
 	//~ParticleSystem();
-	int GetParticleCount();	
-	void Update(sf::Time elapsed);
+	void Update(sf::Time deltaTime);
 	void SetEmitter(sf::Vector2f position);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	
+	int GetParticleCount();
+	void SetEmitAngle(int angle);
+	void SetInitialSpeed(float initialSpeed);
 private:
 	struct Particle
 	{
 		sf::Vector2f velocity;
 		sf::Time lifetime;
 	};
-
 	void ResetParticle(std::size_t index);
-
 	std::vector<Particle> m_particles;
-	//std::vector<sf::RectangleShape> m_shapes;
-	sf::VertexArray m_shapes;
-	sf::Time m_lifetime;
+	std::vector<sf::CircleShape> m_shapes;
+	//sf::VertexArray m_shapes;
+	sf::Time m_emiterLifetime;
 	sf::Vector2f m_emitter;
-	sf::Texture m_texture;
-	int count = 1000;
-
-	//bool isTextureSet = false;
+	sf::Texture* m_texture;
+	int count = 500;
+	float timer = 0;
+	int emiterAngle = 360;
+	float initialSpeed = 50;
+	bool isTextureSet = false;
 };
 
