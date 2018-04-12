@@ -29,6 +29,11 @@ ParticleSystem::ParticleSystem(TextureManager* m_textureManager)
 	}
 }
 
+ParticleSystem::~ParticleSystem()
+{
+
+}
+
 void ParticleSystem::SetEmitter(sf::Vector2f position)
 {
 	m_emitter = position;
@@ -52,17 +57,18 @@ void ParticleSystem::Update(sf::Time deltaTime)
 		{
 			if (count > 100)
 			{
+				for (int i = 0; i < 100; i++)
+				{
+					m_particles.pop_back();
+					m_shapes.pop_back();
+				}
 				count -= 100;
 				m_particles.resize(count);
 				m_shapes.resize(count);
 				timer = 0;
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) { currentEasing = quad; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) { currentEasing = cube; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) { currentEasing = quar; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) { currentEasing = sin; }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) { currentEasing = liner;}
+
 	}
 
 	for (std::size_t i = 0; i < m_particles.size(); ++i)
@@ -220,24 +226,6 @@ int ParticleSystem::GetParticleCount()
 	return count;
 }
 
-std::string ParticleSystem::GetEasingMode()
-{
-	switch (currentEasing)
-	{
-	case quad:
-		return "Quadratic";
-	case cube:
-		return "Cubic";
-	case quar:
-		return "Quartic";
-	case sin:
-		return "Sinusoidal";
-	case liner:
-		return "Liner";
-	}
-	return "Liner";
-}
-
 void ParticleSystem::SetEmitAngle(int emiterAngle)
 {
 	this->emiterAngle = emiterAngle;
@@ -246,6 +234,16 @@ void ParticleSystem::SetEmitAngle(int emiterAngle)
 void ParticleSystem::SetInitialSpeed(float initialSpeed)
 {
 	this->initialSpeed = initialSpeed;
+}
+
+void ParticleSystem::SetEasingMode(easing easingMode)
+{
+	currentEasing = easingMode;
+}
+
+ParticleSystem::easing ParticleSystem::GetEasingMode()
+{
+	return currentEasing;
 }
 
 

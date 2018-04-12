@@ -7,11 +7,14 @@ class ParticleSystemManager
 {
 public:
 	ParticleSystemManager(sf::RenderWindow* window, TextureManager* m_textureManager);
-	//~ParticleSystemManager();
+	~ParticleSystemManager();
 	void Update(sf::Time deltaTime);
+
 	void Draw(sf::RenderWindow* window);
 	void AddParticleSystem(sf::Vector2f position);
-private:
+private:	
+	void SetEasingMode();
+	ParticleSystem::easing currentEasing = ParticleSystem::easing::liner;
 	std::vector<ParticleSystem> m_particleSystem;
 	int particleSystemCount = 0;
 	sf::Text* m_particlesCount = new sf::Text;

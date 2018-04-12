@@ -15,23 +15,43 @@ ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window, TextureMa
 	this->m_textureManager = m_textureManager;
 }
 
-//ParticleSystemManager::~ParticleSystemManager()
-//{
-//	/*for (std::size_t i = 0; i < m_particleSystem->size(); ++i)
-//		m_particleSystem[i]->~ParticleSystem();
-//	m_particleSystem->clear();*/
-//
-//}
+ParticleSystemManager::~ParticleSystemManager()
+{
+
+}
 
 void ParticleSystemManager::Update(sf::Time deltaTime)
 {
-	int temp = 0;
+	SetEasingMode();
+
 	std::string easingMode = "";
+	switch (currentEasing)
+	{
+		case ParticleSystem::easing::quad:
+			easingMode = "Quadratic";
+			break;
+		case ParticleSystem::easing::cube:
+			easingMode = "Cubic";
+			break;
+		case ParticleSystem::easing::quar:
+			easingMode = "Quartic";
+			break;
+		case ParticleSystem::easing::sin:
+			easingMode = "Sinusoidal";
+			break;
+		case ParticleSystem::easing::liner:
+			easingMode = "Liner";
+			break;
+	}
+
+	int temp = 0;
+
 	for (std::size_t i = 0; i < m_particleSystem.size(); ++i)
 	{
+		if (m_particleSystem[i].GetEasingMode() != currentEasing)
+			m_particleSystem[i].SetEasingMode(currentEasing);
 		m_particleSystem[i].Update(deltaTime);
 		temp += m_particleSystem[i].GetParticleCount();
-		easingMode = m_particleSystem[i].GetEasingMode();
 	}
 	particlesCount = temp;
 	m_particlesCount->setString("Particles Count: " + std::to_string(particlesCount) + "\nEasing Mode:" + easingMode);
@@ -47,8 +67,18 @@ void ParticleSystemManager::Draw(sf::RenderWindow* window)
 void ParticleSystemManager::AddParticleSystem(sf::Vector2f position)
 {
 	ParticleSystem* particleSystemToAdd = new ParticleSystem(m_textureManager);
+	particleSystemToAdd->SetEasingMode(currentEasing);
 	particleSystemToAdd->SetEmitter(position);
 	particleSystemToAdd->SetEmitAngle(rand() % 360);
 	particleSystemToAdd->SetInitialSpeed(rand() % 200);
 	m_particleSystem.emplace_back(*particleSystemToAdd);
+}
+
+void ParticleSystemManager::SetEasingMode()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) { currentEasing = ParticleSystem::easing::quad; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) { currentEasing = ParticleSystem::easing::cube; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) { currentEasing = ParticleSystem::easing::quar; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) { currentEasing = ParticleSystem::easing::sin; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) { currentEasing = ParticleSystem::easing::liner; }
 }
