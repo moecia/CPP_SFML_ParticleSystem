@@ -7,9 +7,9 @@ ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window, TextureMa
 
 	m_font->loadFromFile("Fonts/visitor1.ttf");
 	m_particlesCount->setFont(*m_font);
-	m_particlesCount->setCharacterSize(30);
+	m_particlesCount->setCharacterSize(24);
 	m_particlesCount->setString("Particles Count: 0");
-	m_particlesCount->setPosition((window->getSize().x - m_particlesCount->getGlobalBounds().width) / 2, 0);
+	m_particlesCount->setPosition(window->getSize().x - m_particlesCount->getGlobalBounds().width - 80, 0);
 	
 	this->m_textureManager = new TextureManager;
 	this->m_textureManager = m_textureManager;
@@ -26,13 +26,15 @@ ParticleSystemManager::ParticleSystemManager(sf::RenderWindow* window, TextureMa
 void ParticleSystemManager::Update(sf::Time deltaTime)
 {
 	int temp = 0;
+	std::string easingMode = "";
 	for (std::size_t i = 0; i < m_particleSystem.size(); ++i)
 	{
 		m_particleSystem[i].Update(deltaTime);
 		temp += m_particleSystem[i].GetParticleCount();
+		easingMode = m_particleSystem[i].GetEasingMode();
 	}
 	particlesCount = temp;
-	m_particlesCount->setString("Particles Count: " + std::to_string(particlesCount));
+	m_particlesCount->setString("Particles Count: " + std::to_string(particlesCount) + "\nEasing Mode:" + easingMode);
 }
 
 void ParticleSystemManager::Draw(sf::RenderWindow* window)

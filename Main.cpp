@@ -20,8 +20,8 @@ int main()
 	sf::Font* m_font = new sf::Font;
 	m_font->loadFromFile("Fonts/visitor1.ttf");
 	m_guild->setFont(*m_font);
-	m_guild->setCharacterSize(30);
-	m_guild->setString("E: Add particles \nQ: Remove particles");
+	m_guild->setCharacterSize(16);
+	m_guild->setString("E: Add particles \nQ: Remove particles \n1: Quad Easing Mode \n2: Cube Easing Mode \n3: QuarEasing Mode \n4: Sin Easing Mode \n0: Liner Easing Mode");
 	m_guild->setPosition(10, 10);
 
 	sf::Clock m_clock;

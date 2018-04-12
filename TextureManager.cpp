@@ -20,6 +20,10 @@ TextureManager::TextureManager()
 			case 2:
 				if (!m_textureLib[2].loadFromFile("Images/Star.png"))
 					return;
+				break; 
+			case 3:
+				if (!m_textureLib[3].loadFromFile("Images/Heart.png"))
+					return;
 				break;
 		}
 	}

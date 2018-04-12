@@ -8,6 +8,6 @@ public:
 	sf::Texture LoadTexture(int index) const;	
 private:
 	std::vector<sf::Texture> m_textureLib;
-	int textureCount = 3;
+	int textureCount = 4;
 };
 
